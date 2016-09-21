@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/jquery.js"></script>
+    <style>
+        body{
+            perspective: 2000px;
+        }
+        *{
+            padding:0;margin:0;
+        }
+        @keyframes hz {
+            0%{
+                transform: translateZ(0);
+            }
+            100%{
+                transform: translateZ(500px);
+            }
+        }
+        img{
+            animation: hz 2s linear;
+        }
+        #pass{
+            background: url("img/hz.png") no-repeat;
+            -webkit-background-size:cover;
+            background-size:cover;
+            position: fixed;top:20%;left:50%;
+            width:630px;height:419px;margin-left: -315px;
+        }
+        #pass p{
+            font-size:14px;color: #000;font-weight:500;
+            padding:0 70px;box-sizing: border-box;
+            width:100%;height:100px;text-align:justify;line-height:20px;
+            position: absolute;bottom:100px;letter-spacing: 5px;
+        }
+        h2{
+            width:100%;height:30px;text-align: center;line-height: 30px;color: #5C0D09;
+            position: absolute;bottom:220px;font-size:30px;
+        }
+        button{
+            width:100px;height:40px;border:5px solid #F20801;border-radius:10px;
+            position: absolute;bottom:100px;left:50%;margin-left:-50px;
+            background: #F8BD75;box-shadow:3px 3px 10px #000;
+            font-weight: 700;cursor: pointer;font-size:14px;
+            transition:all 0.2s linear;box-sizing: border-box;
+        }
+        a{
+            display: block;
+        }
+        button:hover{
+            transform: scale(1.2,1.2);
+        }
+    </style>
+    <script>
+       $(function(){
+           $('img').css({'width':$(window).width(),'height':$(window).height()})
+
+       })
+    </script>
+</head>
+<body>
+<img src="img/bg6.jpg" alt="">
+<div id="pass">
+    <h2>小诺酷跑</h2>
+    <p>这是一款轻松好玩，简单时尚的跑酷游戏。时尚Q版的动画角色和有趣酷炫的实用道具完美结合，让简单的跑酷与众不同。</p>
+    <a href="run.html"><button>开始游戏</button></a>
+</div>
+</body>
+</html>

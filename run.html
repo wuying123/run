@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/hitPix.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/game.js"></script>
+    <style>
+        *{
+            padding:0;margin:0;
+        }
+        html,body{
+            width:100%;height:100%;
+            padding:0;margin:0;
+            overflow: hidden;
+            font-family: '微软雅黑';
+        }
+        ul li{
+            list-style: none;
+        }
+        canvas{
+            background:#000  url(img/st.jpg) repeat-x;
+        }
+        ul{
+            width:300px;height:300px;
+            background: url(img/paizi1.png) no-repeat;
+            position: fixed;right:20px;top:-50px;
+            padding-top:120px;
+            box-sizing: border-box;
+        }
+        li{
+            width:260px;height:50px;
+            font-size:22px;color:#000;text-align:center;line-height:50px;
+            letter-spacing: 2px;font-weight: 600;
+        }
+        #pass{
+            background: url("img/ts.png") no-repeat;
+            -webkit-background-size:cover;
+            background-size:cover;
+            position: fixed;top:-400px;left:50%;
+            width:325px;height:400px;margin-left: -150px;
+        }
+        #pass p{
+            font-size:35px;color: #000;font-weight: 700;
+            width:100%;height:100px;text-align: center;line-height:100px;
+            position: absolute;bottom:100px;letter-spacing: 5px;
+        }
+        button{
+            width:100px;height: 50px;border:5px solid #72A232;border-radius:10px;
+            position: absolute;bottom:50px;left:50%;margin-left:-50px;
+            color:#000;font-size:16px;background: #F8BD75;box-shadow:3px 3px 10px #000;
+            font-weight: 700;cursor: pointer;
+            transition:all 0.2s linear;
+        }
+        button:hover{
+            transform: scale(1.2,1.2);
+        }
+        .stick{
+            width:228px;height: 20px;border-radius: 5px;border:2px solid #D09B5D;
+            position: fixed;top:220px;right:80px;box-sizing: border-box;
+        }
+        .inn{
+            width:3px;height: 100%;border-radius: 3px;background: green;
+        }
+        #star{
+            width:230px;height:40px;
+            position: fixed;
+            top:245px;right:80px;
+        }
+        dd{
+            width:40px;height: 40px;
+            background: url("img/xx.png") no-repeat;
+            background-size: cover;
+            margin-right:5px;
+            float: left;
+            display: none;
+        }
+        img{
+            visibility: hidden!important;
+        }
+    </style>
+</head>
+<script>
+    window.onload= function () {
+        var can=document.getElementsByTagName('canvas')[0];
+        can.width=document.documentElement.clientWidth;
+        can.height=document.documentElement.clientHeight;
+        var cobj=can.getContext('2d');
+        var runimg=document.getElementsByClassName('run');
+        var jumpimg=document.getElementsByClassName('jump');
+        var hinderimg=document.getElementsByClassName('hinder');
+        var jbimg=document.getElementsByClassName('jb');
+        var gsimg=document.getElementsByClassName('gs');
+        var obj=new play(can,cobj,runimg,jumpimg,hinderimg,jbimg,gsimg);
+        obj.playgame();
+        obj.key();
+        $('button').click(function () {
+            cobj.clearRect(0,0,can.width,can.height);
+            $('#pass').animate({'top':-400},500,function(){
+                var life=$('#life').find('span').html(3);
+                location.reload();
+            })
+        })
+    }
+</script>
+<body>
+<canvas></canvas>
+   <img src="img/1.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/2.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/3.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/4.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/5.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/6.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/7.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/8.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/9.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/10.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/11.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/13.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/15.png" alt="" class="run" style="visibility: hidden">
+   <img src="img/14.png" alt="" class="jump" style="visibility: hidden">
+   <img src="img/g1.png" alt="" class="hinder" style="visibility: hidden">
+   <img src="img/g2.png" alt="" class="hinder" style="visibility: hidden">
+   <img src="img/g3.png" alt="" class="hinder" style="visibility: hidden">
+   <img src="img/g4.png" alt="" class="hinder" style="visibility: hidden">
+   <img src="img/g5.png" alt="" class="hinder" style="visibility: hidden">
+   <img src="img/g6.png" alt="" class="hinder" style="visibility: hidden">
+   <img src="img/g7.png" alt="" class="hinder" style="visibility: hidden">
+   <img src="img/g8.png" alt="" class="hinder" style="visibility: hidden">
+   <img src="img/g10.png" alt="" class="hinder" style="visibility: hidden">
+   <img src="img/s1.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s2.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s3.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s4.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s5.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s6.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s7.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s8.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s9.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s10.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s11.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s12.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s13.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s14.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s15.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s16.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s17.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s18.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s19.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s20.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s21.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s22.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s23.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s24.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s25.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/s26.png" alt="" class="jb" style="visibility: hidden">
+   <img src="img/gs1.png" alt="" class="gs" style="visibility: hidden">
+   <img src="img/gs2.png" alt="" class="gs" style="visibility: hidden">
+   <img src="img/gs3.png" alt="" class="gs" style="visibility: hidden">
+   <img src="img/gs4.png" alt="" class="gs" style="visibility: hidden">
+   <img src="img/gs5.png" alt="" class="gs" style="visibility: hidden">
+   <img src="img/g8.png" alt="" class="gs" style="visibility: hidden">
+   <ul class="ts">
+       <li id="score">分数累计：<span>0</span></li>
+       <li id="life">生命能量：<span>3</span></li>
+   </ul>
+   <audio src="audio1.mp3" id="music1" autoplay="autoplay" loop="loop"></audio>
+   <audio src="a3.mp3" id="music2"></audio>
+   <audio src="sb1.mp3" id="lose1"></audio>
+   <audio src="sl.mp3" id="sl"></audio>
+   <div id="pass">
+       <p>闯关失败</p>
+       <button>重新开始</button>
+   </div>
+   <div class="stick">
+       <div class="inn"></div>
+   </div>
+   <dl id="star">
+       <dd></dd>
+       <dd></dd>
+       <dd></dd>
+       <dd></dd>
+       <dd></dd>
+   </dl>
+</body>
+</html>
